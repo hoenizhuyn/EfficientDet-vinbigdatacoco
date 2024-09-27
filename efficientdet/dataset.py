@@ -19,6 +19,7 @@ class CocoDataset(Dataset):
 
         self.load_classes()
 
+
     def load_classes(self):
 
         # load class names (name -> label)
@@ -26,7 +27,11 @@ class CocoDataset(Dataset):
         categories.sort(key=lambda x: x['id'])
 
         self.classes = {}
+        self.coco_labels = {}
+        self.coco_labels_inverse = {}
         for c in categories:
+            self.coco_labels[len(self.classes)] = c['id']
+            self.coco_labels_inverse[c['id']] = len(self.classes)
             self.classes[c['name']] = len(self.classes)
 
         # also load the reverse (label -> name)
